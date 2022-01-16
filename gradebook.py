@@ -71,7 +71,6 @@ class CollegeStudent(Student):
         super().__init__(first_name, last_name, dob, alive, student_id)
 
 class Classroom:
-
     """
     Declare a class called Classroom:
 
