@@ -38,7 +38,7 @@ class Instructor(Person):
     Hint: Use super class calls
     """
     
-    def __init__(self, first_name, last_name, dob, alive: AliveStatus, instructor_id):
+    def __init__(self, first_name, last_name, dob, alive: AliveStatus):
         super().__init__(first_name, last_name, dob, alive)
         self.instructor_id=f"Instructor_{uuid.uuid4()}"
 
@@ -47,7 +47,7 @@ class Student(Person):
     Additional attribute: student_id that much start with the string "Student_" followed by a UUID value
     """
 
-    def __init__(self, first_name, last_name, dob, alive: AliveStatus,student_id):
+    def __init__(self, first_name, last_name, dob, alive: AliveStatus):
         self.student_id=f"Student_{uuid.uuid4()}"
         super().__init__(first_name, last_name, dob, alive)
 
@@ -89,24 +89,71 @@ class Classroom:
     print_students
     """
 
-    def __init__(self, students:dict, instructors: dict):
+    def __init__(self, students:list, instructors: list):
         self.students = students #a container for students
         self.instructors= instructors #a container for instructors
 
-    def add_instructor(self,instructor):
-        if instructor.instructor_id not in self.instructors:
-            self.instructors[instructor.instructor_id] = instructor
+    def add_instructor(self,new_first_name,new_last_name,new_dob,new_status):
+        new_instructor=list()
+        new_instructor.append(new_first_name)
+        new_instructor.append(new_last_name)
+        new_instructor.append(new_dob)
+        new_instructor.append(new_status)
+        print(new_instructor)
+        if new_instructor not in self.instructors:
+            Instructor.update_first_name(new_instructor[0])
+            Instructor.update_last_name(new_instructor[1])
+            Instructor.update_dob(new_instructor[2])
+            Instructor.update_status(new_instructor[3])
+            Instructor(new_instructor)
+            self.instructors.append(new_instructor)
+        else:
+            print("New instructor already exists")
 
-    def remove_instructor:
-        pass
+    def remove_instructor(self,instructor:list):
+        if instructor in self.instructors:
+            del(instructor)
+        else:
+            print("Instructor does not exist")
 
-    def add_student:
-        pass
+    def add_student(self, new_student:list):
+        if new_student not in self.students:
+            Student(new_student)
+            Student.update_first_name(new_student[0])
+            Student.update_last_name(new_student[1])
+            Student.update_dob(new_student[2])
+            Student.update_status(new_student[3])
+            self.students.append(new_student)
+        else:
+            print("New student already exists")
 
-    def remove_student:
-        pass
+    def remove_student(self, student:list):
+        if student in self.students:
+            del(student)
+        else:
+            print("Student does not exist")
 
-    def print_instructors:
-        pass
+    def print_instructors(self):
+        print(self.instructors)
 
-    def print_students
+    def print_students(self):
+        print(self.students)
+
+c=Classroom([],[])
+c.add_instructor("fn1","ln1","dob1",0)
+c.print_instructors()
+c.add_instructor("fn2","ln2","dob2",1)
+c.print_instructors()
+c.remove_instructor("fn1","ln1","dob1",0)
+c.print_instructors()
+c.remove_instructor("fn3","ln3","dob3",0)
+c.print_instructors()
+
+c.add_student("fn1","ln1","dob1",0)
+c.print_students()
+c.add_student("fn2","ln2","dob2",1)
+c.print_students()
+c.remove_student("fn1","ln1","dob1",0)
+c.print_students()
+c.remove_student("fn3","ln3","dob3",0)
+c.print_students()
