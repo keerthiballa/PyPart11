@@ -90,70 +90,37 @@ class Classroom:
     """
 
     def __init__(self, students:list, instructors: list):
-        self.students = students #a container for students
-        self.instructors= instructors #a container for instructors
+        self.students = {} #a container for students
+        self.instructors= {} #a container for instructors
 
-    def add_instructor(self,new_first_name,new_last_name,new_dob,new_status):
-        new_instructor=list()
-        new_instructor.append(new_first_name)
-        new_instructor.append(new_last_name)
-        new_instructor.append(new_dob)
-        new_instructor.append(new_status)
-        print(new_instructor)
-        if new_instructor not in self.instructors:
-            Instructor.update_first_name(new_instructor[0])
-            Instructor.update_last_name(new_instructor[1])
-            Instructor.update_dob(new_instructor[2])
-            Instructor.update_status(new_instructor[3])
-            Instructor(new_instructor)
-            self.instructors.append(new_instructor)
+    def add_instructor(self,instructor):
+        if instructor.instructor_id not in self.instructors:
+            self.instructors[instructor.instructor_id]=instructor
         else:
-            print("New instructor already exists")
+            print("Instructor already exists")
 
-    def remove_instructor(self,instructor:list):
-        if instructor in self.instructors:
-            del(instructor)
+    def remove_instructor(self,instructor):
+        if instructor.instructor_id not in self.instructors:
+            del self.instructors[instructor.instructor_id]
         else:
-            print("Instructor does not exist")
+            print("Instructor already exists")
 
-    def add_student(self, new_student:list):
-        if new_student not in self.students:
-            Student(new_student)
-            Student.update_first_name(new_student[0])
-            Student.update_last_name(new_student[1])
-            Student.update_dob(new_student[2])
-            Student.update_status(new_student[3])
-            self.students.append(new_student)
+    def add_student(self, student):
+        if student.student_id not in self.students:
+            self.students[student.student_id]=student
         else:
-            print("New student already exists")
+            print("Student already exists")
 
-    def remove_student(self, student:list):
-        if student in self.students:
-            del(student)
+    def remove_student(self, student):
+        if student.student_id not in self.students:
+            del self.student[student.student_id]
         else:
             print("Student does not exist")
 
     def print_instructors(self):
-        print(self.instructors)
+        for k,v in self.instructors.items():
+            print(f"{k}:{v}")
 
     def print_students(self):
-        print(self.students)
-
-c=Classroom([],[])
-c.add_instructor("fn1","ln1","dob1",0)
-c.print_instructors()
-c.add_instructor("fn2","ln2","dob2",1)
-c.print_instructors()
-c.remove_instructor("fn1","ln1","dob1",0)
-c.print_instructors()
-c.remove_instructor("fn3","ln3","dob3",0)
-c.print_instructors()
-
-c.add_student("fn1","ln1","dob1",0)
-c.print_students()
-c.add_student("fn2","ln2","dob2",1)
-c.print_students()
-c.remove_student("fn1","ln1","dob1",0)
-c.print_students()
-c.remove_student("fn3","ln3","dob3",0)
-c.print_students()
+        for k,v in self.students.items():
+            print(f"{k}:{v}")
